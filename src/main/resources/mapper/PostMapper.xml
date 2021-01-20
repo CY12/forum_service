@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.forum.mapper.PostMapper">
+    <resultMap id="BaseResultMap" type="com.example.forum.entity.Post">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="uid" jdbcType="INTEGER" property="uid" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+        <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="content" jdbcType="VARCHAR" property="content" />
+        <result column="starts" jdbcType="INTEGER" property="starts" />
+        <result column="comments" jdbcType="INTEGER" property="comments" />
+        <result column="views" jdbcType="INTEGER" property="views" />
+    </resultMap>
+    <insert id="addPost" parameterType="com.example.forum.entity.Post">
+        <selectKey  keyProperty="id" order="AFTER" resultType="int">
+            select LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO `post` VALUES(#{id},#{uid},#{name},#{avatar},#{createtime},#{updatetime},#{title},#{content},#{starts},#{comments},#{views})
+    </insert>
+<!--    UPDATE 表名称 SET 列名称 = 新值 WHERE 列名称 = 某值-->
+    <update id="updatePost" parameterType="com.example.forum.entity.Post">
+        UPDATE `post`
+        <trim prefix="set" suffixOverrides=",">
+            <if test="content!=null and content!=''">content=#{content},</if>
+            <if test="starts!=null and starts!=''">starts=#{starts},</if>
+            <if test="comments!=null and comments!=''">comments=#{comments},</if>
+            <if test="views!=null and views!=''">views=#{views},</if>
+        </trim>
+        WHERE id = #{id}
+    </update>
+
+<!--    DELETE FROM 表名称 WHERE 列名称 = 值-->
+    <delete id="deletePost" parameterType="com.example.forum.entity.Post">
+        DELETE FROM `post` WHERE id = #{id}
+    </delete>
+
+    <select id="getPost" parameterType="map" resultType="com.example.forum.entity.Post">
+        SELECT * FROM `post` WHERE id = #{id}
+    </select>
+
+    <select id="getPostByUser" parameterType="map" resultType="com.example.forum.entity.Post">
+        SELECT * FROM `post` WHERE uid = #{uid} order by updatetime
+    </select>
+
+    <select id="getPostList" parameterType="map" resultType="com.example.forum.entity.Post">
+        SELECT * FROM `post` ORDER BY updatetime DESC LIMIT #{start},#{size}
+    </select>
+
+    <update id="star" parameterType="map" >
+        update `post` set starts = starts + 1 ,updatetime = updatetime where id = #{id}
+    </update>
+
+    <update id="cancelStar" parameterType="map" >
+        update `post` set starts = starts - 1 ,updatetime = updatetime where id = #{id}
+    </update>
+
+    <update id="view" parameterType="map" >
+        update `post` set views = views + 1,updatetime = updatetime where id = #{id}
+    </update>
+
+    <update id="comment" parameterType="map" >
+        update `post` set comments = comments + 1 where id = #{id}
+    </update>
+
+    <update id="cancelComment" parameterType="map" >
+        update `post` set comments = comments - 1 ,updatetime = updatetime where id = #{id}
+    </update>
+
+
+
+
+</mapper>

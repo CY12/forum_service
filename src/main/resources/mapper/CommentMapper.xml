@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.forum.mapper.CommentMapper">
+    <resultMap  type="com.example.forum.entity.Comment"  id="CommentMap">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="post_id" jdbcType="INTEGER" property="postId" />
+        <result column="uid" jdbcType="INTEGER" property="uid" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+        <result column="reply" jdbcType="INTEGER" property="reply"/>
+        <result column="content" jdbcType="VARCHAR" property="content" />
+<!--        <collection property="replyList" resultMap="replyMap" />-->
+
+    </resultMap>
+
+    <resultMap id="replyMap" type="com.example.forum.entity.Reply">
+        <result column="r_id" jdbcType="INTEGER" property="id" />
+        <result column="r_uid" jdbcType="INTEGER" property="uid" />
+        <result column="r_name" jdbcType="VARCHAR" property="name" />
+        <result column="r_avatar" jdbcType="VARCHAR" property="avatar" />
+        <result column="r_content" jdbcType="VARCHAR" property="content" />
+        <result column="comment_id" jdbcType="INTEGER" property="commentId" />
+        <result column="comment_uid" jdbcType="INTEGER" property="commentUid" />
+        <result column="comment_name" jdbcType="VARCHAR" property="commentName" />
+        <result column="reply_id" jdbcType="INTEGER" property="replyId" />
+        <result column="reply_uid" jdbcType="INTEGER" property="replyUid" />
+        <result column="reply_name" jdbcType="VARCHAR" property="replyName" />
+        <result column="r_createtime" jdbcType="TIMESTAMP" property="createtime" />
+    </resultMap>
+
+
+    <insert id="addComment" parameterType="com.example.forum.entity.Comment">
+        <selectKey  keyProperty="id" order="AFTER" resultType="int">
+            select LAST_INSERT_ID()
+        </selectKey>
+
+        INSERT INTO `comment` VALUES(#{id},#{postId},#{uid},#{name},#{avatar},#{createtime},#{content},#{reply})
+    </insert>
+
+    <select id="getComment" parameterType="map" resultType="com.example.forum.entity.Comment">
+        select * from `comment` where id = #{id}
+    </select>
+    <!--    DELETE FROM 表名称 WHERE 列名称 = 值-->
+    <delete id="deleteComment" parameterType="com.example.forum.entity.Comment">
+        DELETE FROM `comment` WHERE id = #{id}
+    </delete>
+    <select id="getCommentList" parameterType="map" resultMap="CommentMap">
+
+        SELECT * FROM `comment` WHERE post_id = #{postId}  order by createtime  LIMIT #{start},#{size}
+
+    </select>
+<!--    <select id="getCommentList" parameterType="map" resultMap="CommentMap">-->
+<!--        select-->
+<!--        c.id,-->
+<!--        c.post_id,-->
+<!--        c.uid,-->
+<!--        c.name,-->
+<!--        c.avatar,-->
+<!--        c.reply,-->
+<!--        c.content,-->
+<!--        c.createtime,-->
+<!--        r.id as r_id,-->
+<!--        r.uid as r_uid,-->
+<!--        r.name as r_name,-->
+<!--        r.avatar as r_avatar,-->
+<!--        r.content as r_content,-->
+<!--        r.comment_id,-->
+<!--        r.comment_uid,-->
+<!--        r.comment_name,-->
+<!--        r.reply_id,-->
+<!--        r.reply_uid,-->
+<!--        r.reply_name,-->
+<!--        r.createtime as r_createtime-->
+<!--        from `comment` as c left join `reply` as r on c.id = r.comment_id where c.post_id = #{postId} order by c.createtime  LIMIT #{start},#{size}-->
+<!--&lt;!&ndash;        SELECT * FROM `comment` WHERE post_id = #{postId}  order by createtime  LIMIT #{start},#{size}&ndash;&gt;-->
+<!--    </select>-->
+
+    <select id="getCommentByUser" parameterType="map" resultType="com.example.forum.entity.Comment">
+        SELECT * FROM `comment` WHERE uid = #{uid} order by createtime
+    </select>
+
+    <update id="reply" parameterType="map" >
+        update `comment` set reply = reply + 1 where id = #{id}
+    </update>
+
+    <update id="cancelReply" parameterType="map" >
+        update `comment` set reply = reply - 1 ,updatetime = updatetime where id = #{id} and reply > 0
+    </update>
+
+
+</mapper>

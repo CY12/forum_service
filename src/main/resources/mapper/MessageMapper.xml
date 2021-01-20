@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.forum.mapper.MessageMapper">
+    <resultMap  type="com.example.forum.entity.Message"  id="MessageMap">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="uid" jdbcType="INTEGER" property="uid" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+        <result column="message" jdbcType="VARCHAR" property="message" />
+        <result column="post_id" jdbcType="INTEGER" property="postId" />
+        <result column="receiver_uid" jdbcType="INTEGER" property="receiverUid" />
+        <result column="post_title" jdbcType="VARCHAR" property="postTitle" />
+        <result column="comment_id" jdbcType="INTEGER" property="commentId" />
+        <result column="reply_id" jdbcType="INTEGER" property="replyId" />
+        <result column="reply_content" jdbcType="VARCHAR" property="replyContent" />
+        <result column="is_read" jdbcType="INTEGER" property="isRead" />
+        <result column="is_receive" jdbcType="INTEGER" property="isReceive" />
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+        <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+    </resultMap>
+
+    <insert id="addMessage" parameterType="com.example.forum.entity.Message">
+        <selectKey  keyProperty="id" order="AFTER" resultType="int">
+            select LAST_INSERT_ID()
+        </selectKey>
+
+        INSERT INTO `message` VALUES(#{id},#{uid},#{name},#{avatar},#{message},#{postId},#{receiverUid},#{postTitle},#{commentId},#{replyId},#{replyContent},#{isRead},#{isReceive},#{createtime},#{updatetime})
+    </insert>
+
+    <select id="getMessageList" parameterType="map" resultMap="MessageMap">
+        SELECT * FROM `message` WHERE uid = #{uid}  order by createtime desc LIMIT #{start},#{size}
+    </select>
+
+    <select id="getNewMessage" parameterType="map" resultType="map">
+        SELECT Count(*) as nums FROM `message` WHERE receiver_uid = #{uid} and  is_receive = 0
+    </select>
+
+
+
+    <update id="updateMessage" parameterType="com.example.forum.entity.Message" >
+        UPDATE `message`
+        <trim prefix="set" suffixOverrides=",">
+            <if test="isRead!=null and isRead!=''">is_read=#{isRead},</if>
+            <if test="isReceive!=null and isReceive!=''">is_receive=#{isReceive},</if>
+        </trim>
+        WHERE id = #{id}
+
+    </update>
+
+    <update id="updateMessageReceive" parameterType="map">
+        update `message` set is_receive = 1 where receiver_uid = #{uid} and is_receive = 0
+    </update>
+
+    <update id="updateMessageRead" parameterType="map">
+        update `message` set is_read = 1 where id = #{id} and is_read = 0
+    </update>
+
+</mapper>
