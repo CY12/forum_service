@@ -1,5 +1,7 @@
 package com.example.forum.entity;
 
+import java.util.List;
+
 public class Reply {
     private int id;
     private int uid;
@@ -13,6 +15,24 @@ public class Reply {
     private int replyUid;
     private String replyName;
     private String createtime;
+    private int image;
+    private List<String> urlList;
+
+    public List<String> getUrlList() {
+        return urlList;
+    }
+
+    public void setUrlList(List<String> urlList) {
+        this.urlList = urlList;
+    }
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
+    }
 
     public int getReplyId() {
         return replyId;
@@ -108,5 +128,25 @@ public class Reply {
 
     public void setCreatetime(String createtime) {
         this.createtime = createtime;
+    }
+
+    @Override
+    public String toString() {
+        return "Reply{" +
+                "id=" + id +
+                ", uid=" + uid +
+                ", name='" + name + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", content='" + content + '\'' +
+                ", commentId=" + commentId +
+                ", commentUid=" + commentUid +
+                ", commentName='" + commentName + '\'' +
+                ", replyId=" + replyId +
+                ", replyUid=" + replyUid +
+                ", replyName='" + replyName + '\'' +
+                ", createtime='" + createtime + '\'' +
+                ", image=" + image +
+                ", urlList=" + urlList +
+                '}';
     }
 }

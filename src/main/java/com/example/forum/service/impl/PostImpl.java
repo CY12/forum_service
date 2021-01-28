@@ -2,16 +2,20 @@ package com.example.forum.service.impl;
 
 import com.example.forum.entity.Post;
 import com.example.forum.mapper.PostMapper;
+import com.example.forum.service.FileService;
 import com.example.forum.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class PostImpl implements PostService {
     @Autowired
     PostMapper postMapper;
+    @Autowired
+    FileService fileService;
 
     @Override
     public int addPost(Post post) {
@@ -30,17 +34,40 @@ public class PostImpl implements PostService {
 
     @Override
     public Post getPost(int id) {
-        return postMapper.getPost(id);
+        Post post = postMapper.getPost(id);
+        List<String> urls = new ArrayList<>();
+        if (post.getImage()>0){
+            urls = fileService.getImage(FileService.IMG_POST,id);
+        }
+        post.setUrlList(urls);
+        return post;
     }
 
     @Override
     public List<Post> getPostList(int start, int size) {
-        return postMapper.getPostList(start,size);
+        List<Post> postList = postMapper.getPostList(start,size);
+        for (int i=0;i<postList.size();i++){
+            List<String> urls = new ArrayList<>();
+            if (postList.get(i).getImage() > 0){
+                 urls = fileService.getImage(FileService.IMG_POST,postList.get(i).getId());
+
+            }
+            postList.get(i).setUrlList(urls);
+        }
+        return postList;
     }
 
     @Override
     public List<Post> getPostByUser(int uid) {
-        return postMapper.getPostByUser(uid);
+        List<Post> postList = postMapper.getPostByUser(uid);;
+        for (int i=0;i<postList.size();i++){
+            List<String> urls = new ArrayList<>();
+            if (postList.get(i).getImage() > 0){
+                urls = fileService.getImage(FileService.IMG_POST,postList.get(i).getId());
+            }
+            postList.get(i).setUrlList(urls);
+        }
+        return postList;
     }
 
     @Override
@@ -67,7 +94,5 @@ public class PostImpl implements PostService {
     public int cancelComment(int id) {
         return postMapper.cancelComment(id);
     }
-
-
 
 }

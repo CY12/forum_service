@@ -21,7 +21,7 @@
             select LAST_INSERT_ID()
         </selectKey>
 
-        INSERT INTO `reply` VALUES(#{id},#{uid},#{name},#{avatar},#{content},#{commentId},#{commentUid},#{commentName},#{replyId},#{replyUid},#{replyName},#{createtime})
+        INSERT INTO `reply` VALUES(#{id},#{uid},#{name},#{avatar},#{content},#{commentId},#{commentUid},#{commentName},#{replyId},#{replyUid},#{replyName},#{createtime},#{image})
     </insert>
 
     <select id="getReplyList" parameterType="map" resultMap="ReplyMap">

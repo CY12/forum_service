@@ -7,12 +7,14 @@
         <result column="name" jdbcType="VARCHAR" property="name" />
         <result column="avatar" jdbcType="VARCHAR" property="avatar" />
         <result column="message" jdbcType="VARCHAR" property="message" />
+        <result column="message_img" jdbcType="INTEGER" property="messageImage" />
         <result column="post_id" jdbcType="INTEGER" property="postId" />
         <result column="receiver_uid" jdbcType="INTEGER" property="receiverUid" />
         <result column="post_title" jdbcType="VARCHAR" property="postTitle" />
         <result column="comment_id" jdbcType="INTEGER" property="commentId" />
         <result column="reply_id" jdbcType="INTEGER" property="replyId" />
         <result column="reply_content" jdbcType="VARCHAR" property="replyContent" />
+        <result column="reply_img" jdbcType="INTEGER" property="replyImage" />
         <result column="is_read" jdbcType="INTEGER" property="isRead" />
         <result column="is_receive" jdbcType="INTEGER" property="isReceive" />
         <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
@@ -24,7 +26,7 @@
             select LAST_INSERT_ID()
         </selectKey>
 
-        INSERT INTO `message` VALUES(#{id},#{uid},#{name},#{avatar},#{message},#{postId},#{receiverUid},#{postTitle},#{commentId},#{replyId},#{replyContent},#{isRead},#{isReceive},#{createtime},#{updatetime})
+        INSERT INTO `message` VALUES(#{id},#{uid},#{name},#{avatar},#{message},#{message_img},#{postId},#{receiverUid},#{postTitle},#{commentId},#{replyId},#{replyContent},#{reply_img},#{isRead},#{isReceive},#{createtime},#{updatetime})
     </insert>
 
     <select id="getMessageList" parameterType="map" resultMap="MessageMap">

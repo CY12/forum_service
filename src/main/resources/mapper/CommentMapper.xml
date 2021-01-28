@@ -10,6 +10,7 @@
         <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
         <result column="reply" jdbcType="INTEGER" property="reply"/>
         <result column="content" jdbcType="VARCHAR" property="content" />
+        <result column="image" jdbcType="INTEGER" property="image"/>
 <!--        <collection property="replyList" resultMap="replyMap" />-->
 
     </resultMap>
@@ -27,6 +28,7 @@
         <result column="reply_uid" jdbcType="INTEGER" property="replyUid" />
         <result column="reply_name" jdbcType="VARCHAR" property="replyName" />
         <result column="r_createtime" jdbcType="TIMESTAMP" property="createtime" />
+        <result column="image" jdbcType="INTEGER" property="image"/>
     </resultMap>
 
 
@@ -35,7 +37,7 @@
             select LAST_INSERT_ID()
         </selectKey>
 
-        INSERT INTO `comment` VALUES(#{id},#{postId},#{uid},#{name},#{avatar},#{createtime},#{content},#{reply})
+        INSERT INTO `comment` VALUES(#{id},#{postId},#{uid},#{name},#{avatar},#{createtime},#{content},#{reply},#{image})
     </insert>
 
     <select id="getComment" parameterType="map" resultType="com.example.forum.entity.Comment">

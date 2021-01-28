@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.forum.mapper.FileMapper">
+    <resultMap  type="com.example.forum.entity.Image"  id="FileResultMap">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="url" jdbcType="VARCHAR" property="url" />
+        <result column="type" jdbcType="INTEGER" property="type" />
+        <result column="type_id" jdbcType="INTEGER" property="typeId" />
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    </resultMap>
+
+    <insert id="addImage" parameterType="com.example.forum.entity.Image" >
+        <selectKey  keyProperty="id" order="AFTER" resultType="int">
+            select LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO `file` VALUES (#{id},#{url},#{type},#{typeId},#{createtime})
+    </insert>
+
+    <select id="getImage" parameterType="map" resultType="string">
+        select url from `file` where type = #{type} and type_id = #{typeId}
+    </select>
+
+
+</mapper>

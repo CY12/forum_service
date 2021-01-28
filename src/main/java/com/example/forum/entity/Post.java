@@ -1,5 +1,7 @@
 package com.example.forum.entity;
 
+import java.util.List;
+
 public class Post {
     private int id;
     private int uid;
@@ -12,6 +14,24 @@ public class Post {
     private int starts;
     private int comments;
     private int views;
+    private int image;
+    private List<String> urlList;
+
+    public List<String> getUrlList() {
+        return urlList;
+    }
+
+    public void setUrlList(List<String> urlList) {
+        this.urlList = urlList;
+    }
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
+    }
 
     public String getAvatar() {
         return avatar;

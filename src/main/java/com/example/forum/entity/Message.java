@@ -6,16 +6,34 @@ public class Message {
     private String name;
     private String avatar;
     private String message;
+    private int messageImage;
     private int postId;
     private int receiverUid;
     private String postTitle;
     private int commentId; // 消息类型
     private int replyId; //消息id
     private String replyContent; // 回复消息内容 当是评论是为空 回复是为回复内容
+    private int replyImage;
     private int isRead;
     private int isReceive;
     private String createtime;
     private String updatetime;
+
+    public int getMessageImage() {
+        return messageImage;
+    }
+
+    public void setMessageImage(int messageImage) {
+        this.messageImage = messageImage;
+    }
+
+    public int getReplyImage() {
+        return replyImage;
+    }
+
+    public void setReplyImage(int replyImage) {
+        this.replyImage = replyImage;
+    }
 
     public int getCommentId() {
         return commentId;

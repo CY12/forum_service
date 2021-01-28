@@ -66,6 +66,7 @@ public class MessageController {
 
     @PostMapping(value = "/updateMessageRead")
     public Response updateMessageRead(int id){
+        System.out.println("id"+id);
         return Response.getResponse(messageService.updateMessageRead(id));
     }
 

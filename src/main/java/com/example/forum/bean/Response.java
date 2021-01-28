@@ -110,11 +110,26 @@ public class Response<T> {
 
     }
 
+    public static Response getResponse(String message,boolean isSuccess){
+       if (isSuccess){
+           return success(message);
+       }else {
+           return error(message);
+       }
+    }
+
     public static <T> Response getResponse(T data){
         if (data != null){
             return Response.success(data);
         }
         return Response.error();
+    }
+
+    public static Response getUploadResponse(int errorCounts){
+        if (errorCounts == 0){
+            return Response.success("上传成功");
+        }
+        return Response.error("上传失败"+errorCounts+"个");
     }
 
 }

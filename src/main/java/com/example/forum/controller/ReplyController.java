@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -47,6 +48,12 @@ public class ReplyController {
     @PostMapping(value = "/getReplyDetail")
     public Response getReplyDetail(int commentId){
         return Response.getResponse(replyService.getReplyDetail(commentId));
+    }
+
+    @PostMapping(value = "/addImageReply")
+    public Response addImageReply(List<MultipartFile> file,int type,String reply){
+        System.out.println();
+        return replyService.addImageReply(file,type,reply);
     }
 
 
