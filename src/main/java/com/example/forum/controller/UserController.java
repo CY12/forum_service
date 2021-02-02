@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class UserController {
 
     @PostMapping(value = "/updateUser")
     public Response updateUser(@RequestBody User user){
+        System.out.println("updateUser");
         if (user == null){
             return Response.errorParams();
         }
@@ -50,8 +52,14 @@ public class UserController {
     }
 
 
-
-
+    @PostMapping(value = "/updateImageUser")
+    public Response updateImageUser(MultipartFile file,String userJson){
+        System.out.println("===updateImageUser");
+        if (file.isEmpty() || userJson.length() == 0){
+            return Response.errorParams();
+        }
+        return getResponse(userService.updateImageUser(file,userJson));
+    }
 
 
     private Response getResponse(int count){

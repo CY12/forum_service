@@ -1,5 +1,6 @@
 package com.example.forum.controller;
 
+import cn.hutool.json.JSONUtil;
 import com.example.forum.bean.Response;
 import com.example.forum.entity.Post;
 import com.example.forum.service.PostService;
@@ -13,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class PostController {
@@ -34,6 +36,13 @@ public class PostController {
             return Response.success();
         }
         return Response.error();
+    }
+
+    @PostMapping(value = "/addImagePost")
+    public Response addImagePost(List<MultipartFile> files,String postJson){
+        System.out.println("fileSize == "+files.size()+ postJson);
+        return postService.addImagePost(files,postJson);
+
     }
 
     /**

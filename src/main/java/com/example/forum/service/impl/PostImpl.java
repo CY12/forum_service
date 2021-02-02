@@ -1,11 +1,14 @@
 package com.example.forum.service.impl;
 
+import cn.hutool.json.JSONUtil;
+import com.example.forum.bean.Response;
 import com.example.forum.entity.Post;
 import com.example.forum.mapper.PostMapper;
 import com.example.forum.service.FileService;
 import com.example.forum.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,6 +96,22 @@ public class PostImpl implements PostService {
     @Override
     public int cancelComment(int id) {
         return postMapper.cancelComment(id);
+    }
+
+    @Override
+    public Response addImagePost(List<MultipartFile> multipartFiles, String postJson) {
+        Post post = JSONUtil.toBean(postJson,Post.class);
+        int count = addPost(post);;
+        if (count > 0){
+            int error = fileService.uploadImage(multipartFiles,FileService.IMG_POST,post.getId());
+            if (error > 0){
+                return Response.error("图片上传失败");
+            }
+        }else {
+            return Response.error("发布失败");
+        }
+
+        return Response.success();
     }
 
 }

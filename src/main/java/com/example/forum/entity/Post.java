@@ -122,5 +122,22 @@ public class Post {
         this.views = views;
     }
 
-
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", uid=" + uid +
+                ", name='" + name + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", createtime='" + createtime + '\'' +
+                ", updatetime='" + updatetime + '\'' +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", starts=" + starts +
+                ", comments=" + comments +
+                ", views=" + views +
+                ", image=" + image +
+                ", urlList=" + urlList +
+                '}';
+    }
 }

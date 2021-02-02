@@ -1,6 +1,7 @@
 package com.example.forum.service.impl;
 
 import cn.hutool.json.JSONUtil;
+import com.example.forum.bean.Id;
 import com.example.forum.bean.Response;
 import com.example.forum.entity.Comment;
 import com.example.forum.entity.Reply;
@@ -35,6 +36,7 @@ public class ReplyImpl implements ReplyService {
 
     @Override
     public Response addImageReply(List<MultipartFile> multipartFiles,int type, String reply) {
+        Id id = new Id();
         if (type == FileService.IMG_REPLY){
             Reply reply1 = JSONUtil.toBean(reply,Reply.class);
             int count = addReply(reply1);
@@ -45,7 +47,8 @@ public class ReplyImpl implements ReplyService {
             if (error > 0){
                 return Response.error("图片上传失败");
             }
-            return Response.success("回复成功");
+            id.setId(reply1.getId());
+            return Response.success(id);
         }else if (type == FileService.IMG_COMMENT){
             Comment comment = JSONUtil.toBean(reply,Comment.class);
             int count = commentService.addComment(comment);
@@ -56,7 +59,8 @@ public class ReplyImpl implements ReplyService {
             if (error > 0){
                 return Response.error("图片上传失败");
             }
-            return Response.success("评论成功");
+            id.setId(comment.getId());
+            return Response.success(id);
 
         }
        return Response.errorParams();

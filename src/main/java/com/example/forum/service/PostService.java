@@ -1,6 +1,8 @@
 package com.example.forum.service;
 
+import com.example.forum.bean.Response;
 import com.example.forum.entity.Post;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -26,6 +28,8 @@ public interface PostService {
     int comment(int id);
 
     int cancelComment(int id);
+
+    Response addImagePost(List<MultipartFile> multipartFiles, String postJson);
 
 
 

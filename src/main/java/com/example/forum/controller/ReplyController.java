@@ -51,9 +51,9 @@ public class ReplyController {
     }
 
     @PostMapping(value = "/addImageReply")
-    public Response addImageReply(List<MultipartFile> file,int type,String reply){
-        System.out.println();
-        return replyService.addImageReply(file,type,reply);
+    public Response addImageReply(List<MultipartFile> files,int type,String reply){
+
+        return replyService.addImageReply(files,type,reply);
     }
 
 

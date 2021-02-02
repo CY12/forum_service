@@ -18,7 +18,7 @@
         <selectKey  keyProperty="id" order="AFTER" resultType="int">
             select LAST_INSERT_ID()
         </selectKey>
-        INSERT INTO `post` VALUES(#{id},#{uid},#{name},#{avatar},#{createtime},#{updatetime},#{title},#{content},#{starts},#{comments},#{views})
+        INSERT INTO `post` VALUES(#{id},#{uid},#{name},#{avatar},#{createtime},#{updatetime},#{title},#{content},#{starts},#{comments},#{views},#{image})
     </insert>
 <!--    UPDATE 表名称 SET 列名称 = 新值 WHERE 列名称 = 某值-->
     <update id="updatePost" parameterType="com.example.forum.entity.Post">

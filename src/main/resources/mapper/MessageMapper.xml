@@ -26,7 +26,7 @@
             select LAST_INSERT_ID()
         </selectKey>
 
-        INSERT INTO `message` VALUES(#{id},#{uid},#{name},#{avatar},#{message},#{message_img},#{postId},#{receiverUid},#{postTitle},#{commentId},#{replyId},#{replyContent},#{reply_img},#{isRead},#{isReceive},#{createtime},#{updatetime})
+        INSERT INTO `message` VALUES(#{id},#{uid},#{name},#{avatar},#{message},#{messageImage},#{postId},#{receiverUid},#{postTitle},#{commentId},#{replyId},#{replyContent},#{replyImage},#{isRead},#{isReceive},#{createtime},#{updatetime})
     </insert>
 
     <select id="getMessageList" parameterType="map" resultMap="MessageMap">

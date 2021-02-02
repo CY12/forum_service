@@ -1,6 +1,7 @@
 package com.example.forum.service;
 
 import com.example.forum.entity.User;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -14,6 +15,8 @@ public interface UserService {
     List<User> getUserByImei(String imei);
 
     User getUser(int id);
+
+    int updateImageUser(MultipartFile file,String userJson);
 
 
 }
