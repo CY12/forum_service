@@ -25,15 +25,22 @@ public class UserController {
         if (users!= null && users.size() >  0){
             return Response.error(Response.CODE_EXIST,"用户已存在");
         }
+        if (userService.register(user) > 0){
+            return getResponse(user);
+        }else {
+            return Response.error();
+        }
 
-        return  getResponse(userService.register(user));
     }
 
     @PostMapping(value = "/updateUser")
     public Response updateUser(@RequestBody User user){
-        System.out.println("updateUser");
+
         if (user == null){
             return Response.errorParams();
+        }
+        if (userService.updateUser(user) > 0){
+            return getResponse(user);
         }
         return getResponse(userService.updateUser(user));
     }
@@ -54,7 +61,7 @@ public class UserController {
 
     @PostMapping(value = "/updateImageUser")
     public Response updateImageUser(MultipartFile file,String userJson){
-        System.out.println("===updateImageUser");
+
         if (file.isEmpty() || userJson.length() == 0){
             return Response.errorParams();
         }

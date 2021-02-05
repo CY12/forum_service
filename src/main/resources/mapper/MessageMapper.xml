@@ -30,7 +30,7 @@
     </insert>
 
     <select id="getMessageList" parameterType="map" resultMap="MessageMap">
-        SELECT * FROM `message` WHERE uid = #{uid}  order by createtime desc LIMIT #{start},#{size}
+        SELECT * FROM `message` WHERE receiver_uid = #{uid}  order by createtime desc LIMIT #{start},#{size}
     </select>
 
     <select id="getNewMessage" parameterType="map" resultType="map">

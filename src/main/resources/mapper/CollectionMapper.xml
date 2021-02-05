@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.forum.mapper.CollectionMapper">
+    <resultMap type="com.example.forum.entity.Collections" id="CollectionMap">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="post_id" jdbcType="INTEGER" property="postId" />
+    </resultMap>
+
+    <insert id="addCollection" parameterType="com.example.forum.entity.Collections" >
+        <selectKey  keyProperty="id" order="AFTER" resultType="int">
+            select LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO `collection` VALUES (#{id},#{uid},#{postId},#{createtime})
+    </insert>
+
+    <delete id="cancelCollection" parameterType="map">
+        delete from `collection` where uid = #{uid} and post_id = #{postId}
+    </delete>
+
+    <select id="getCollections" parameterType="map" resultMap="CollectionMap">
+        select distinct uid,post_id from `collection` where  uid = #{uid}
+    </select>
+
+
+</mapper>

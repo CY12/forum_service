@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int updateImageUser(MultipartFile file, String userJson) {
-        System.out.println("=== service updateImageUser  userJson=== "+userJson);
+
         List<MultipartFile> files = new ArrayList<>();
         files.add(file);
         User user = JSONUtil.toBean(userJson,User.class);
@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
                 System.out.println("s == null");
             }
         }
-        System.out.println(user.toString());
+
         return updateUser(user);
     }
 }

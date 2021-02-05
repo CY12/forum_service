@@ -17,13 +17,7 @@ public class MessageController {
     @Autowired
     MessageService messageService;
 
-//    int addMessage(Message message);
-//
-//    int updateMessage(Message message);
-//
-//    List<Message> getMessageList(int uid);
 
-//    List<Message> getNewMessage(int uid);
 
     /**
      * 增加一条消息

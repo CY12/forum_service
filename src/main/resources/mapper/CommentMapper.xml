@@ -40,7 +40,7 @@
         INSERT INTO `comment` VALUES(#{id},#{postId},#{uid},#{name},#{avatar},#{createtime},#{content},#{reply},#{image})
     </insert>
 
-    <select id="getComment" parameterType="map" resultType="com.example.forum.entity.Comment">
+    <select id="getComment" parameterType="map" resultMap="CommentMap">
         select * from `comment` where id = #{id}
     </select>
     <!--    DELETE FROM 表名称 WHERE 列名称 = 值-->

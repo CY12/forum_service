@@ -38,6 +38,9 @@ public class PostImpl implements PostService {
     @Override
     public Post getPost(int id) {
         Post post = postMapper.getPost(id);
+        if (post == null) {
+            return post;
+        }
         List<String> urls = new ArrayList<>();
         if (post.getImage()>0){
             urls = fileService.getImage(FileService.IMG_POST,id);
