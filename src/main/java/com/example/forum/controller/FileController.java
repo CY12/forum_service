@@ -37,4 +37,8 @@ public class FileController {
     public Response addImage(@RequestBody Image image){
         return Response.getResponse(fileService.addImage(image));
     }
+
+
+
+
 }

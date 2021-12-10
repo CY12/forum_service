@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.forum.mapper.ImageSquareMapper">
+    <resultMap  type="com.example.forum.entity.ImageSquare"  id="ImageSquareResultMap">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
+        <result column="type" jdbcType="INTEGER" property="type" />
+        <result column="author" jdbcType="VARCHAR" property="author" />
+        <result column="desc" jdbcType="VARCHAR" property="desc"/>
+        <result column="contact" jdbcType="VARCHAR" property="contact"/>
+        <result column="download" jdbcType="INTEGER" property="download" />
+        <result column="view" jdbcType="INTEGER" property="view" />
+        <result column="time" jdbcType="TIMESTAMP" property="time" />
+    </resultMap>
+    <insert id="addImageSquare" parameterType="com.example.forum.entity.ImageSquare">
+        <selectKey  keyProperty="id" order="AFTER" resultType="int">
+            select LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO `image_square` VALUES (#{id},#{imgUrl},#{type},#{author},#{desc},#{contact},#{download},#{view},#{time})
+    </insert>
+
+    <select id="getImageSquare" parameterType="map" resultMap="ImageSquareResultMap">
+        SELECT * FROM `image_square` WHERE type = #{type} ORDER BY time DESC LIMIT #{start},#{size}
+    </select>
+</mapper>

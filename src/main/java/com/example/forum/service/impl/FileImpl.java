@@ -26,7 +26,7 @@ public class FileImpl implements FileService {
             if (!multipartFile.isEmpty()){
                 String endless = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
                 long timeMillis = System.currentTimeMillis();
-                String filePath = "/home/ftpfile/";
+                String filePath = "/home/public/";
                 int random=(int)(Math.random()*900)+100;
                 String url = timeMillis+random+endless;
                 File dest = new File(filePath+url);
@@ -62,7 +62,7 @@ public class FileImpl implements FileService {
             if (!multipartFile.isEmpty()){
                 String endless = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
                 long timeMillis = System.currentTimeMillis();
-                String filePath = "/home/ftpfile/";
+                String filePath = "/home/public/";
                 int random=(int)(Math.random()*900)+100;
                 url = timeMillis+random+endless;
                 File dest = new File(filePath+url);
@@ -88,7 +88,7 @@ public class FileImpl implements FileService {
         if (error > 0){
             return null;
         }
-        return "http://121.196.167.157:9090/image/"+url;
+        return "http://152.136.137.189:8082/data/"+url;
 
     }
 
@@ -101,7 +101,7 @@ public class FileImpl implements FileService {
 
     @Override
     public List<String> getImage(int type, int typeId) {
-        String baseUrl = "http://121.196.167.157:9090/image/";
+        String baseUrl = "http://152.136.137.189:8082/data/";
         List<String> images = fileMapper.getImage(type,typeId);
         List<String> url = new ArrayList<>();
         for (String image : images){

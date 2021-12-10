@@ -10,6 +10,7 @@ public interface FileService {
     public static final int IMG_POST = 2;
     public static final int IMG_COMMENT = 3;
     public static final int IMG_REPLY = 4;
+    public static final int IMG_WEATHER_SQUARE = 5;
 
 
     int uploadImage(List<MultipartFile> multipartFiles,int type,int typeId);

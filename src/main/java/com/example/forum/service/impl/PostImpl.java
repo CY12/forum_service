@@ -104,7 +104,7 @@ public class PostImpl implements PostService {
     @Override
     public Response addImagePost(List<MultipartFile> multipartFiles, String postJson) {
         Post post = JSONUtil.toBean(postJson,Post.class);
-        int count = addPost(post);;
+        int count = addPost(post);
         if (count > 0){
             int error = fileService.uploadImage(multipartFiles,FileService.IMG_POST,post.getId());
             if (error > 0){
