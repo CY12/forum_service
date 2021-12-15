@@ -10,6 +10,15 @@ public class ImageSquare {
     private int download;
     private int view;
     private String time;
+    private int pass;
+
+    public int getPass() {
+        return pass;
+    }
+
+    public void setPass(int pass) {
+        this.pass = pass;
+    }
 
     public String getContact() {
         return contact;

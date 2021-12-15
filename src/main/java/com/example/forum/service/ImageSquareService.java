@@ -10,7 +10,7 @@ public interface ImageSquareService {
 
     List<ImageSquare> getImageSquare(int start,int size,int type);
 
-    int download(int id);
+    int downloadImg(int id);
 
     int view(int id);
 }

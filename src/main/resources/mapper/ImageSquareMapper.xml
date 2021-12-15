@@ -11,15 +11,25 @@
         <result column="download" jdbcType="INTEGER" property="download" />
         <result column="view" jdbcType="INTEGER" property="view" />
         <result column="time" jdbcType="TIMESTAMP" property="time" />
+        <result column="pass" jdbcType="INTEGER" property="pass" />
     </resultMap>
     <insert id="addImageSquare" parameterType="com.example.forum.entity.ImageSquare">
         <selectKey  keyProperty="id" order="AFTER" resultType="int">
             select LAST_INSERT_ID()
         </selectKey>
-        INSERT INTO `image_square` VALUES (#{id},#{imgUrl},#{type},#{author},#{desc},#{contact},#{download},#{view},#{time})
+        INSERT INTO `image_square` VALUES (#{id},#{imgUrl},#{type},#{author},#{desc},#{contact},#{download},#{view},#{time},#{pass})
     </insert>
 
     <select id="getImageSquare" parameterType="map" resultMap="ImageSquareResultMap">
-        SELECT * FROM `image_square` WHERE type = #{type} ORDER BY time DESC LIMIT #{start},#{size}
+        SELECT * FROM `image_square` WHERE type = #{type} and pass = #{pass} ORDER BY time DESC LIMIT #{start},#{size}
     </select>
+
+    <select id="getAllImage" parameterType="map" resultMap="ImageSquareResultMap">
+        SELECT * FROM `image_square` WHERE pass = #{pass} ORDER BY download DESC LIMIT #{start},#{size}
+    </select>
+
+
+    <update id="downloadImg" parameterType="map" >
+        update `image_square` set download = download + 1  where id = #{id}
+    </update>
 </mapper>

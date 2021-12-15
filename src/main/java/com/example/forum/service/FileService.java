@@ -17,6 +17,8 @@ public interface FileService {
 
     String uploadImageByS(List<MultipartFile> multipartFiles,int type,int typeId);
 
+    String uploadImageByS(MultipartFile multipartFile, int type, int typeId);
+
     int addImage(Image image);
 
     List<String> getImage(int type,int typeId);

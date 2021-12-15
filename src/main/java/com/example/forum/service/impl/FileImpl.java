@@ -92,6 +92,37 @@ public class FileImpl implements FileService {
 
     }
 
+    @Override
+    public String uploadImageByS(MultipartFile multipartFile, int type, int typeId) {
+        String url = null;
+        if (!multipartFile.isEmpty()) {
+            String endless = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
+            long timeMillis = System.currentTimeMillis();
+            String filePath = "/home/public/";
+            int random = (int) (Math.random() * 900) + 100;
+            url = timeMillis + random + endless;
+            File dest = new File(filePath + url);
+            try {
+                multipartFile.transferTo(dest);
+                Image image = new Image();
+                image.setUrl(url);
+                image.setType(type);
+                image.setTypeId(typeId);
+                int addSuccess = addImage(image);
+                if (addSuccess == 0) {
+                 return null;
+                }
+            } catch (IOException e) {
+                System.out.println("FileImpl 上传失败=========" + e.toString());
+            }
+        } else {
+            System.out.println("FileImpl files empty ====== 图片资源为空 ");
+        }
+
+        return "http://152.136.137.189:8082/data/" + url;
+
+    }
+
 
     @Override
     public int addImage(Image image) {

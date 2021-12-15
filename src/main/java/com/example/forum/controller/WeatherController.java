@@ -2,6 +2,7 @@ package com.example.forum.controller;
 
 import com.example.forum.bean.Response;
 import com.example.forum.entity.ImageSquare;
+import com.example.forum.service.ConstantsService;
 import com.example.forum.service.ImageSquareService;
 import com.example.forum.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,8 @@ public class WeatherController {
     WeatherService weatherService;
     @Autowired
     ImageSquareService imageSquareService;
-
+    @Autowired
+    ConstantsService constantsService;
 
     @PostMapping("/getWeatherCommons")
     public Response getWeatherCommons(){
@@ -36,5 +38,15 @@ public class WeatherController {
     @PostMapping("/addSquareImage")
     public Response addSquareImage(String imgSquareJson, List<MultipartFile> files){
         return Response.getResponse(imageSquareService.addImageSquare(imgSquareJson,files));
+    }
+
+    @PostMapping ("/getWeatherImg")
+    public Response getImgType(){
+        return Response.getResponse(constantsService.getConstants(1));
+    }
+
+    @PostMapping("/downloadImg")
+    public Response downloadImg(int id){
+        return Response.getResponse(imageSquareService.downloadImg(id));
     }
 }

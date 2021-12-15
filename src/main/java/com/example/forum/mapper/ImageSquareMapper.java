@@ -12,9 +12,11 @@ import java.util.List;
 public interface ImageSquareMapper {
     int addImageSquare(ImageSquare imageSquare);
 
-    List<ImageSquare> getImageSquare(int start, int size, int type);
+    List<ImageSquare> getImageSquare(int start, int size, int type,int pass);
 
-    int download(int id);
+    List<ImageSquare> getAllImage(int start, int size, int type,int pass);
+
+    int downloadImg(int id);
 
     int view(int id);
 }

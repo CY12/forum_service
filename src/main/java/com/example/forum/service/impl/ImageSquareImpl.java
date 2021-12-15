@@ -22,24 +22,30 @@ public class ImageSquareImpl implements ImageSquareService {
 
     @Override
     public int addImageSquare(String json,List<MultipartFile> files) {
-        ImageSquare imageSquare = JSONUtil.toBean(json,ImageSquare.class);
-        String url = fileService.uploadImageByS(files,FileImpl.IMG_WEATHER_SQUARE,-1);
-        imageSquare.setImgUrl(url);
-        if (url == null){
-            return 0;
+        int success = 0;
+        for (MultipartFile file : files){
+            String url = fileService.uploadImageByS(file,FileImpl.IMG_WEATHER_SQUARE,-1);
+            if (url != null){
+                ImageSquare imageSquare = JSONUtil.toBean(json,ImageSquare.class);
+                imageSquare.setImgUrl(url);
+                imageSquareMapper.addImageSquare(imageSquare);
+                success++;
+            }
         }
-        System.out.println("addImageSquare"+url);
-        return imageSquareMapper.addImageSquare(imageSquare);
+        return success;
     }
 
     @Override
     public List<ImageSquare> getImageSquare(int start, int size, int type) {
-        return imageSquareMapper.getImageSquare(start,size,type);
+            if (type == 10){
+                return imageSquareMapper.getAllImage(start,size,type,0);
+            }
+        return imageSquareMapper.getImageSquare(start,size,type,0);
     }
 
     @Override
-    public int download(int id) {
-        return imageSquareMapper.download(id);
+    public int downloadImg(int id) {
+        return imageSquareMapper.downloadImg(id);
     }
 
     @Override
