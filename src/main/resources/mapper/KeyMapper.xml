@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.forum.mapper.heromapper.KeyMapper">
+    <resultMap id="BaseResultMap" type="com.example.forum.entity.Key">
+        <result column="keyName" jdbcType="VARCHAR" property="keyName" />
+        <result column="damageName" jdbcType="VARCHAR" property="damageName" />
+        <result column="damageType" jdbcType="VARCHAR" property="damageType" />
+        <result column="basicDamage" jdbcType="DOUBLE" property="basicDamage" />
+        <result column="damageFrom" jdbcType="VARCHAR" property="damageFrom" />
+        <result column="seniorDamage" jdbcType="VARCHAR" property="seniorDamage" />
+        <result column="buffs" jdbcType="VARCHAR" property="buffs" />
+        <result column="skillLevelDamage" jdbcType="DOUBLE" property="skillLevelDamage" />
+        <result column="heroLevelDamage" jdbcType="DOUBLE" property="heroLevelDamage" />
+        <result column="updateDate" jdbcType="TIMESTAMP" property="updatedate" />
+    </resultMap>
+
+
+    <insert id="addKey" parameterType="com.example.forum.entity.Key">
+        INSERT INTO `key` VALUES(#{keyName},#{damageName},#{damageType},#{basicDamage},#{damageFrom},#{seniorDamage},#{buffs},#{skillLevelDamage},#{heroLevelDamage},#{updateDate})
+    </insert>
+
+    <select id="getKey" parameterType="map" resultType="com.example.forum.entity.Key">
+        SELECT * FROM `key` WHERE keyName = #{keyName}
+    </select>
+
+    <select id="getAllKey" parameterType="map" resultType="com.example.forum.entity.Key">
+        SELECT * FROM `key`
+    </select>
+</mapper>

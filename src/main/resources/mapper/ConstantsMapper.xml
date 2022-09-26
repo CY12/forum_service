@@ -3,6 +3,6 @@
 <mapper namespace="com.example.forum.mapper.ConstantsMapper">
 
     <select id="getConstants" parameterType="map" resultType="string">
-        SELECT extra_map FROM `constants` where type = #{type}
+        SELECT extra_map FROM `constants` where id = #{id}
     </select>
 </mapper>
