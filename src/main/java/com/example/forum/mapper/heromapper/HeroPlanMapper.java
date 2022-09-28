@@ -11,5 +11,7 @@ import java.util.List;
 public interface HeroPlanMapper {
     int addHeroPlan(HeroPlan heroPlan);
 
-    List<HeroPlan> getHeroPlan(int heroId);
+    List<HeroPlan> getHeroPlan(String heroId);
+
+    int addUsedTimes(int id);
 }

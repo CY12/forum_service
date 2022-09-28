@@ -7,7 +7,8 @@ import java.util.List;
 public interface HeroPlanService {
     int addHeroPlan(HeroPlan heroPlan);
 
-    List<HeroPlan> getHeroPlan(int heroId);
+    List<HeroPlan> getHeroPlan(String heroId);
 
+    int addUsedTimes(int id);
 
 }

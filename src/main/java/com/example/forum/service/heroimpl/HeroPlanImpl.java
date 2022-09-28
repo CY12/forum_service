@@ -20,7 +20,12 @@ public class HeroPlanImpl implements HeroPlanService {
     }
 
     @Override
-    public List<HeroPlan> getHeroPlan(int heroId) {
+    public List<HeroPlan> getHeroPlan(String heroId) {
         return heroPlanMapper.getHeroPlan(heroId);
+    }
+
+    @Override
+    public int addUsedTimes(int id) {
+        return heroPlanMapper.addUsedTimes(id);
     }
 }

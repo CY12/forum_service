@@ -27,6 +27,11 @@
     </insert>
 
     <select id="getHeroPlan" parameterType="map" resultType="com.example.forum.entity.HeroPlan">
-        SELECT * FROM `hero_plan`
+        SELECT * FROM `hero_plan` where heroName = #{heroName} order by usedTimes
     </select>
+
+
+    <update id="addUsedTimes" parameterType="map" >
+        update `hero_plan` set usedTimes = usedTimes + 1  where id = #{id}
+    </update>
 </mapper>

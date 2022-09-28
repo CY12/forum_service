@@ -108,8 +108,16 @@ public class HeroController {
     }
 
     @PostMapping(value = "/getAllTalent")
-    public Response getAllTalent(){
-
+    public Response getAllTalent(String version){
+        if (version == null || version.length() == 0){
+            return Response.getResponse(talentService.getAllTalent());
+        }
+        String gameJson = constantsService.getConstants(2);
+        GameFlowerBean gameFlower = JSONUtil.toBean(gameJson, GameFlowerBean.class);
+        if (gameFlower == null) return Response.error("未找到版本信息");
+        if (version.equals(gameFlower.getVersion())){
+            return Response.success("是最新版本");
+        }
         return Response.getResponse(talentService.getAllTalent());
     }
 
@@ -129,8 +137,16 @@ public class HeroController {
     }
 
     @PostMapping(value = "/getAllEquipment")
-    public Response getAllEquipment(){
-
+    public Response getAllEquipment(String version){
+        if (version == null || version.length() == 0){
+            return Response.getResponse(equipmentService.getAllEquipment());
+        }
+        String gameJson = constantsService.getConstants(2);
+        GameFlowerBean gameFlower = JSONUtil.toBean(gameJson, GameFlowerBean.class);
+        if (gameFlower == null) return Response.error("未找到版本信息");
+        if (version.equals(gameFlower.getVersion())){
+            return Response.success("是最新版本");
+        }
         return Response.getResponse(equipmentService.getAllEquipment());
     }
 
@@ -148,8 +164,14 @@ public class HeroController {
     }
 
     @PostMapping(value = "/getHeroPlan")
-    public Response getHeroPlan(int heroId){
+    public Response getAllHeroPlan(String heroName){
 
-        return Response.getResponse(heroPlanService.getHeroPlan(heroId));
+        return Response.getResponse(heroPlanService.getHeroPlan(heroName));
+    }
+
+    @PostMapping(value = "/usedHeroPlan")
+    public Response usedHeroPlan(int id){
+
+        return Response.getResponse(heroPlanService.addUsedTimes(id));
     }
 }
