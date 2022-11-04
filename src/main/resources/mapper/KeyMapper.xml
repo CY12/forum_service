@@ -3,6 +3,7 @@
 <mapper namespace="com.example.forum.mapper.heromapper.KeyMapper">
     <resultMap id="BaseResultMap" type="com.example.forum.entity.Key">
         <result column="keyName" jdbcType="VARCHAR" property="keyName" />
+        <result column="heroId" jdbcType="INTEGER" property="heroId" />
         <result column="damageName" jdbcType="VARCHAR" property="damageName" />
         <result column="damageType" jdbcType="VARCHAR" property="damageType" />
         <result column="basicDamage" jdbcType="DOUBLE" property="basicDamage" />
@@ -16,7 +17,7 @@
 
 
     <insert id="addKey" parameterType="com.example.forum.entity.Key">
-        INSERT INTO `key` VALUES(#{keyName},#{damageName},#{damageType},#{basicDamage},#{damageFrom},#{seniorDamage},#{buffs},#{skillLevelDamage},#{heroLevelDamage},#{updateDate})
+        INSERT INTO `key` VALUES(#{keyName},#{heroId},#{damageName},#{damageType},#{basicDamage},#{damageFrom},#{seniorDamage},#{buffs},#{skillLevelDamage},#{heroLevelDamage},#{updateDate})
     </insert>
 
     <select id="getKey" parameterType="map" resultType="com.example.forum.entity.Key">
@@ -26,4 +27,19 @@
     <select id="getAllKey" parameterType="map" resultType="com.example.forum.entity.Key">
         SELECT * FROM `key`
     </select>
+
+    <update id="updateKey" parameterType="com.example.forum.entity.Key">
+        UPDATE `key`
+        <trim prefix="set" suffixOverrides=",">
+            <if test="basicDamage!=-1">basicDamage=#{basicDamage},</if>
+            <if test="damageType!=null and damageType!=''">damageType=#{damageType},</if>
+            <if test="damageFrom!=null and damageFrom!=''">damageFrom=#{damageFrom},</if>
+            <if test="seniorDamage!=null and seniorDamage!=''">seniorDamage=#{seniorDamage},</if>
+            <if test="skillLevelDamage!= -1">skillLevelDamage=#{skillLevelDamage},</if>
+            <if test="heroId!=0">heroId=#{heroId},</if>
+            <if test="heroLevelDamage!=-1">heroLevelDamage=#{heroLevelDamage},</if>
+            <if test="buffs!=null and buffs!=''">buffs=#{buffs},</if>
+        </trim>
+        WHERE keyName = #{keyName}
+    </update>
 </mapper>

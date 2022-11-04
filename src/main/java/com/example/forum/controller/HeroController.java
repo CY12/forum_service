@@ -8,6 +8,7 @@ import com.example.forum.bean.GameFlowerBean;
 import com.example.forum.bean.Response;
 import com.example.forum.entity.*;
 
+import com.example.forum.entity.httpbean.BasicHeroData;
 import com.example.forum.service.ConstantsService;
 import com.example.forum.service.heroservice.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,9 @@ public class HeroController {
     @Autowired
     KeyService keyService;
 
+    @Autowired
+    BasicHeroDataService heroDataService;
+
     @PostMapping(value = "/addHero")
     public Response addHero(@RequestBody Hero hero){
         if (hero == null) {
@@ -52,11 +56,11 @@ public class HeroController {
         String keyNameR = jsonObjectR.getString("skillKey");
         JSONObject jsonObjectP = JSONObject.parseObject(hero.getSkillPJson());
         String keyNameP = jsonObjectP.getString("skillKey");
-        keyService.getKey(keyName,hero.getCname()+"Q");
-        keyService.getKey(keyNameW,hero.getCname()+"W");
-        keyService.getKey(keyNameE,hero.getCname()+"E");
-        keyService.getKey(keyNameR,hero.getCname()+"R");
-        keyService.getKey(keyNameP,hero.getCname()+"P");
+        keyService.getOrAddKey(keyName,hero.getCname()+"Q");
+        keyService.getOrAddKey(keyNameW,hero.getCname()+"W");
+        keyService.getOrAddKey(keyNameE,hero.getCname()+"E");
+        keyService.getOrAddKey(keyNameR,hero.getCname()+"R");
+        keyService.getOrAddKey(keyNameP,hero.getCname()+"P");
         int count = heroService.addHero(hero);
         if ( count > 0){
             return Response.success();
@@ -68,7 +72,7 @@ public class HeroController {
 
     @PostMapping(value = "/updateHero")
     public Response updateHero(@RequestBody Hero hero){
-        if (hero == null || hero.getId() == 0) {
+        if (hero == null || hero.getHeroId() == 0) {
             return Response.errorParams();
         }
         int count = heroService.updateHero(hero);
@@ -98,7 +102,7 @@ public class HeroController {
             return Response.errorParams();
         }
         if (talent.getKey() != null && talent.getKey().length() > 0){
-            keyService.getKey(talent.getKey(),talent.getName());
+            keyService.getOrAddKey(talent.getKey(),talent.getName());
         }
         int count = talentService.addTalent(talent);
         if ( count > 0){
@@ -127,7 +131,7 @@ public class HeroController {
             return Response.errorParams();
         }
         if (equipment.getKey() != null && equipment.getKey().length() > 0){
-           keyService.getKey(equipment.getKey(),equipment.getName());
+           keyService.getOrAddKey(equipment.getKey(),equipment.getName());
         }
         int count = equipmentService.addEquipment(equipment);
         if ( count > 0){
@@ -174,4 +178,23 @@ public class HeroController {
 
         return Response.getResponse(heroPlanService.addUsedTimes(id));
     }
+
+    @PostMapping(value = "/addBasicHeroData")
+    Response addBasicHeroData(@RequestBody BasicHeroData heroData){
+
+        return Response.getResponse(heroDataService.addBasicHeroData(heroData));
+    }
+
+//    @PostMapping(value = "/insertBasicHeroData")
+//    public void insertBasicHeroData(){
+//        List<HttpHero> list = HttpUtils.getInstance().getHttp("https://game.gtimg.cn/images/lol/act/img/js/heroList/hero_list.js", HttpHero.class);
+//        ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
+//        service.scheduleWithFixedDelay(new Runnable() {
+//            @Override
+//            public void run() {
+//                HttpUtils.insertHeroTimer(list,"12.18");
+//            }
+//        },0,5, TimeUnit.SECONDS);
+//
+//    }
 }

@@ -20,12 +20,16 @@ public class KeyImpl implements KeyService {
     }
 
     @Override
-    public int updateKey(Key key) {
-        return 0;
+    public int updateOrAddKey(Key key) {
+        if (getKey(key.getKeyName()) == null){
+
+           return addKey(key);
+        }
+        return keyMapper.updateKey(key);
     }
 
     @Override
-    public Key getKey(String name,String desc) {
+    public Key getOrAddKey(String name, String desc) {
         if (name == null || name.length() == 0) return null;
         Key key = keyMapper.getKey(name);
         if (key == null){
@@ -35,6 +39,11 @@ public class KeyImpl implements KeyService {
             addKey(key);
         }
         return key;
+    }
+
+    @Override
+    public Key getKey(String name) {
+        return keyMapper.getKey(name);
     }
 
     @Override

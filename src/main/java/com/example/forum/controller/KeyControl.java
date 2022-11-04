@@ -53,6 +53,13 @@ public class KeyControl {
         return Response.getResponse(keyService.getAllKey());
     }
 
+    @PostMapping(value = "/updateOrAddKey")
+    public Response updateOrAddKey(@RequestBody Key key){
+        return Response.getResponse(keyService.updateOrAddKey(key));
+    }
+
+
+
 
 
 }

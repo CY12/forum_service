@@ -31,6 +31,12 @@ public class HeroImpl implements HeroService {
 
     @Override
     public int updateHero(Hero hero) {
-        return heroMapper.updateHero(hero);
+        int count = 0;
+        try {
+           count =  heroMapper.updateHero(hero);
+        }catch (Exception e){
+            System.out.println("error"+e);
+        }
+        return count;
     }
 }

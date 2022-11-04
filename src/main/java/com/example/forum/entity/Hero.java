@@ -1,12 +1,20 @@
 package com.example.forum.entity;
 
 
+import com.example.forum.entity.httpbean.HttpHeroDetail;
+import com.example.forum.entity.httpbean.Spells;
+
+import java.util.List;
+
 public class Hero {
-    private int id;
+    private int heroId;
     private String name;
     private String cname;
     private String img;
     private String type;// ad ap
+    private String title;
+    private String roles;
+    private String desc;
     //射程
     private double ar;
     //暴击
@@ -41,8 +49,14 @@ public class Hero {
     private int date;
     private int where;
 
+    private String qName;
+    private String wName;
+    private String eName;
+    private String rName;
+    private String pName;
     private String skillQDesc;
     private String skillQJson;
+
     private String skillWDesc;
     private String skillWJson;
     private String skillEDesc;
@@ -55,6 +69,131 @@ public class Hero {
     private int version;
     private String updateDate;
 
+    public void copyFormHeroDetail(HttpHeroDetail heroDetail, List<Spells> spellsList){
+        this.heroId = Integer.parseInt(heroDetail.getHeroId());
+        this.name = heroDetail.getAlias();
+        this.cname = heroDetail.getTitle();
+        this.title = heroDetail.getName();
+        this.img = "https://game.gtimg.cn/images/lol/act/img/champion/"+heroDetail.getAlias()+".png";
+        if ("kMagic".equals(heroDetail.getDamageType())){
+            this.type = "ap";
+
+        }else {
+            this.type = "ad";
+        }
+        String roles = "";
+        for (String s: heroDetail.getRoles()){
+            roles = roles + s+",";
+        }
+        this.roles = roles;
+        this.desc = heroDetail.getShortBio();
+        this.ar = Double.parseDouble(heroDetail.getAttackrange());
+        this.originalHp = Double.parseDouble(heroDetail.getHp());
+        this.perHp = Double.parseDouble(heroDetail.getHpperlevel());
+        this.originalMana = Double.parseDouble(heroDetail.getMp());
+        this.perMana = Double.parseDouble(heroDetail.getMpperlevel());
+        this.originalAd = Double.parseDouble(heroDetail.getAttackdamage());
+        this.perAd = Double.parseDouble(heroDetail.getAttackdamageperlevel());
+        this.originalArmor = Double.parseDouble(heroDetail.getArmor());
+        this.perArmor = Double.parseDouble(heroDetail.getArmorperlevel());
+        this.originalMr = Double.parseDouble(heroDetail.getSpellblock());
+        this.perMr = Double.parseDouble(heroDetail.getSpellblockperlevel());
+        this.speed = Double.parseDouble(heroDetail.getMovespeed());
+        for (Spells spells: spellsList){
+            if (spells.getSpellKey().equals("q")){
+                this.qName = spells.getName();
+                this.skillQDesc = spells.getDescription();
+                this.skillQJson = "{\"name\":\""+qName+"\",\"skillKey\":\""+heroDetail.getAlias()+"Q\"}";
+
+            }else if (spells.getSpellKey().equals("w")){
+                this.wName = spells.getName();
+                this.skillWDesc = spells.getDescription();
+                this.skillWJson = "{\"name\":\""+wName+"\",\"skillKey\":\""+heroDetail.getAlias()+"W\"}";
+
+            }else if (spells.getSpellKey().equals("e")){
+                this.eName = spells.getName();
+                this.skillEDesc = spells.getDescription();
+                this.skillEJson = "{\"name\":\""+eName+"\",\"skillKey\":\""+heroDetail.getAlias()+"E\"}";
+
+            }else if (spells.getSpellKey().equals("r")){
+                this.rName = spells.getName();
+                this.skillRDesc = spells.getDescription();
+                this.skillRJson = "{\"name\":\""+rName+"\",\"skillKey\":\""+heroDetail.getAlias()+"R\"}";
+
+            }else if (spells.getSpellKey().equals("passive")){
+                this.pName = spells.getName();
+                this.skillPDesc = spells.getDescription();
+                this.skillPJson = "{\"name\":\""+pName+"\",\"skillKey\":\""+heroDetail.getAlias()+"P\"}";
+
+            }
+        }
+
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public String getqName() {
+        return qName;
+    }
+
+    public void setqName(String qName) {
+        this.qName = qName;
+    }
+
+    public String getwName() {
+        return wName;
+    }
+
+    public void setwName(String wName) {
+        this.wName = wName;
+    }
+
+    public String geteName() {
+        return eName;
+    }
+
+    public void seteName(String eName) {
+        this.eName = eName;
+    }
+
+    public String getrName() {
+        return rName;
+    }
+
+    public void setrName(String rName) {
+        this.rName = rName;
+    }
+
+    public String getpName() {
+        return pName;
+    }
+
+    public void setpName(String pName) {
+        this.pName = pName;
+    }
+
     public String getImg() {
         return img;
     }
@@ -63,12 +202,12 @@ public class Hero {
         this.img = img;
     }
 
-    public int getId() {
-        return id;
+    public int getHeroId() {
+        return heroId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setHeroId(int heroId) {
+        this.heroId = heroId;
     }
 
     public String getName() {

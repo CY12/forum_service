@@ -1,10 +1,18 @@
 package com.example.forum.entity;
 
+import com.example.forum.entity.httpbean.Items;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Equipment {
     private String name;
-    private String type;
+    private String type = "";
     //暴击
     private double crit;
     //法强
@@ -41,6 +49,110 @@ public class Equipment {
     private String equipmentPassive;// 恶魔之拥 被动 2% 法强 json
     private String updateDate;
 
+
+    public void copyFromHttpEquipment(Items items){
+        this.name = items.getName();
+        this.desc = items.getPlaintext();
+
+        if (items.getDescription().contains("rarityMythic")){
+            this.equipmentType = "myth";
+            this.key = this.name;
+        }else if (Integer.parseInt(items.getTotal()) > 2000){
+            this.equipmentType = "length";
+        }else if (Integer.parseInt(items.getTotal()) < 800){
+            this.equipmentType = "simple";
+        }else {
+            this.equipmentType = "epic";
+        }
+        this.img = items.getIconPath();
+        processAttr(items.getDescription());
+    }
+
+    private void processAttr(String attr){
+        String[] strings = attr.split("attention");
+        Map map = new HashMap();
+        findNext(strings,1,true,0,map);
+    }
+
+    public  void findNext(String[] strings, int index, boolean isNum, double number, Map map){
+        if (index >= strings.length) return;
+        String s = strings[index];
+        if (isNum){
+            double per = 1;
+            if (s.contains("%")){
+                per = 0.01;
+            }
+            String numString = isNum(s);
+            if (numString.length() > 0){
+                Double num = Double.parseDouble(numString) * per;
+
+                findNext(strings,index+1,false,num,map);
+            }
+        }else {
+            String text =  s.substring(s.indexOf(">") + 1, s.indexOf("<"));
+            process(text,number);
+            map.put(text,number);
+            findNext(strings,index+1,true,0,map);
+        }
+
+
+    }
+
+    public  String isNum(String s){
+        String regex = "[^0-9]";
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(s);
+        String str = m.replaceAll("").trim();
+        return str;
+    }
+
+    public void process(String target,double num){
+        try {
+            target = URLDecoder.decode(target,"utf-8");
+        } catch (UnsupportedEncodingException e) {
+            System.out.println("equipment process error "+e);
+        }
+        if (target.contains("攻击力")){
+            this.ad = num;
+            this.type = this.type+"ad,";
+        }else if (target.contains("法术强度")){
+            this.ap = num;
+            this.type = this.type+ "ap,";
+        }else if (target.contains("生命值")){
+            this.hp = num;
+            this.type = this.type+ "hp,";
+        }else if (target.contains("护甲穿透")){
+            this.armorThroughPer = num;
+            this.type = this.type+ "armorT,";
+        }else if (target.contains("法术穿透")){
+            this.mrThroughPer = num;
+            this.type = this.type+ "mrT,";
+        }else if (target.contains("穿甲")){
+            this.armorThroughNum = num;
+            this.type = this.type+ "armorT,";
+        }else if (target.contains("护甲")){
+            this.armor = num;
+            this.type = this.type+ "armor,";
+        }else if (target.contains("魔法抗性")){
+            this.mr = num;
+            this.type = this.type+ "mr,";
+        }else if (target.contains("移动速度")){
+            this.speed = num;
+            this.type = this.type+ "speed,";
+        }else if (target.contains("暴击")){
+            this.crit = num;
+            this.type = this.type+ "crit,";
+        }else if (target.contains("攻击速度")){
+            this.as = num;
+            this.type = this.type+ "as,";
+        }else if (target.equals("法力")){
+            this.mana = num;
+            this.type = this.type+ "mana,";
+        }else {
+            System.out.println("unknown === "+target);
+        }
+
+    }
     public String getUpdateDate() {
         return updateDate;
     }

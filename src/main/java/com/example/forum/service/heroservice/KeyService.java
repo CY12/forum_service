@@ -7,9 +7,11 @@ import java.util.List;
 public interface KeyService {
     int addKey(Key key);
 
-    int updateKey(Key key);
+    int updateOrAddKey(Key key);
 
-    Key getKey(String name,String desc);
+    Key getOrAddKey(String name, String desc);
+
+    Key getKey(String name);
 
     List<Key> getAllKey();
 }

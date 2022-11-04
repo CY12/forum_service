@@ -3,6 +3,7 @@ package com.example.forum.entity;
 public class Key {
     private String keyName;
     private String damageName;
+    private int heroId;
     private String damageType;// ad ap real
     private double basicDamage;//40
     private String damageFrom;//  skill  equipment  passive a
@@ -13,7 +14,13 @@ public class Key {
     private double heroLevelDamage;
     private String updateDate;
 
+    public int getHeroId() {
+        return heroId;
+    }
 
+    public void setHeroId(int heroId) {
+        this.heroId = heroId;
+    }
 
     public String getUpdateDate() {
         return updateDate;
@@ -95,5 +102,21 @@ public class Key {
 
     public void setHeroLevelDamage(double heroLevelDamage) {
         this.heroLevelDamage = heroLevelDamage;
+    }
+
+    @Override
+    public String toString() {
+        return "Key{" +
+                "keyName='" + keyName + '\'' +
+                ", damageName='" + damageName + '\'' +
+                ", damageType='" + damageType + '\'' +
+                ", basicDamage=" + basicDamage +
+                ", damageFrom='" + damageFrom + '\'' +
+                ", seniorDamage='" + seniorDamage + '\'' +
+                ", buffs='" + buffs + '\'' +
+                ", skillLevelDamage=" + skillLevelDamage +
+                ", heroLevelDamage=" + heroLevelDamage +
+                ", updateDate='" + updateDate + '\'' +
+                '}';
     }
 }
