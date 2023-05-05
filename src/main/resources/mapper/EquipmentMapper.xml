@@ -19,12 +19,15 @@
         <result column="mrThroughPer" jdbcType="DOUBLE" property="mrThroughPer" />
         <result column="armorThroughNum" jdbcType="DOUBLE" property="armorThroughNum" />
         <result column="mrThroughNum" jdbcType="DOUBLE" property="mrThroughNum" />
+        <result column="cool" jdbcType="DOUBLE" property="cool" />
+        <result column="detail" jdbcType="VARCHAR" property="detail" />
         <result column="desc" jdbcType="VARCHAR" property="desc" />
         <result column="key" jdbcType="VARCHAR" property="key" />
         <result column="extraTitle" jdbcType="VARCHAR" property="extraTitle" />
         <result column="mythPassive" jdbcType="LONGVARCHAR" property="mythPassive" />
         <result column="extraDescList" jdbcType="LONGVARCHAR" property="extraDescList" />
         <result column="equipmentPassive" jdbcType="LONGVARCHAR" property="equipmentPassive" />
+        <result column="elseMap" jdbcType="LONGVARCHAR" property="elseMap" />
         <result column="updateDate" jdbcType="TIMESTAMP" property="updateDate" />
     </resultMap>
 
@@ -40,19 +43,52 @@
         `ap`, `hp`, `mana`, `as`,
         `armor`, `mr`, `speed`, `armorThroughPer`,
         `mrThroughPer`, `armorThroughNum`, `mrThroughNum`,
-        `desc`, `key`, `extraTitle`,
-        `updateDate`, `mythPassive`, `extraDescList`,
-        `equipmentPassive`)
+                               `cool`,
+        `detail`,`desc`, `key`, `extraTitle`,
+        `mythPassive`, `extraDescList`,
+        `equipmentPassive`,`elseMap`,`updateDate`)
         values (#{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR},
         #{equipmentType,jdbcType=VARCHAR}, #{crit,jdbcType=DOUBLE}, #{ad,jdbcType=DOUBLE},
         #{ap,jdbcType=DOUBLE}, #{hp,jdbcType=DOUBLE}, #{mana,jdbcType=DOUBLE}, #{as,jdbcType=DOUBLE},
         #{armor,jdbcType=DOUBLE}, #{mr,jdbcType=DOUBLE}, #{speed,jdbcType=DOUBLE}, #{armorThroughPer,jdbcType=DOUBLE},
-        #{mrThroughPer,jdbcType=DOUBLE}, #{armorThroughNum,jdbcType=DOUBLE}, #{mrThroughNum,jdbcType=DOUBLE},
-        #{desc,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}, #{extraTitle,jdbcType=VARCHAR},
-        #{updateDate,jdbcType=TIMESTAMP}, #{mythPassive,jdbcType=LONGVARCHAR}, #{extraDescList,jdbcType=LONGVARCHAR},
-        #{equipmentPassive,jdbcType=LONGVARCHAR})
+        #{mrThroughPer,jdbcType=DOUBLE}, #{armorThroughNum,jdbcType=DOUBLE}, #{mrThroughNum,jdbcType=DOUBLE},#{cool,jdbcType=DOUBLE},
+        #{detail,jdbcType=VARCHAR},#{desc,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR}, #{extraTitle,jdbcType=VARCHAR},
+        #{mythPassive,jdbcType=LONGVARCHAR}, #{extraDescList,jdbcType=LONGVARCHAR},
+        #{equipmentPassive,jdbcType=LONGVARCHAR}, #{elseMap,jdbcType=LONGVARCHAR},#{updateDate,jdbcType=TIMESTAMP})
     </insert>
 
+    <update id="updateEquipment" parameterType="com.example.forum.entity.Equipment">
+        UPDATE equipment
+        SET
+            `name` = #{name},
+            `type` = #{type},
+            img = #{img},
+            equipmentType = #{equipmentType},
+            crit = #{crit},
+            ad = #{ad},
+            ap = #{ap},
+            hp = #{hp},
+            mana = #{mana},
+            `as` = #{as},
+            armor = #{armor},
+            mr = #{mr},
+            speed = #{speed},
+            armorThroughPer = #{armorThroughPer},
+            mrThroughPer = #{mrThroughPer},
+            armorThroughNum = #{armorThroughNum},
+            mrThroughNum = #{mrThroughNum},
+            cool = #{cool},
+            detail = #{detail},
+            `desc` = #{desc},
+            `key` = #{key},
+            extraTitle = #{extraTitle},
+            mythPassive = #{mythPassive},
+            extraDescList = #{extraDescList},
+            equipmentPassive = #{equipmentPassive},
+            elseMap = #{elseMap}
+        where `name` = #{name,jdbcType=VARCHAR}
+
+    </update>
     <select id="getAllEquipment" parameterType="map" resultType="com.example.forum.entity.Equipment">
         SELECT * FROM `equipment`
     </select>

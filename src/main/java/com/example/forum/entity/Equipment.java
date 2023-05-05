@@ -37,9 +37,12 @@ public class Equipment {
     private double armorThroughNum;// 固定穿透
     private double mrThroughNum;
 
+    private double cool; // 冷却缩减
+
     //装备伤害
 
     private String desc;
+    private String detail;
     private String key;
     private String extraTitle;// 主动伤害
     private String extraDescList;// json
@@ -47,12 +50,14 @@ public class Equipment {
     public String equipmentType;// 神话 传说
     private String mythPassive;// 神话被动 json
     private String equipmentPassive;// 恶魔之拥 被动 2% 法强 json
+    private String elseMap;
     private String updateDate;
 
 
     public void copyFromHttpEquipment(Items items){
         this.name = items.getName();
-        this.desc = items.getPlaintext();
+        this.detail = items.getPlaintext();
+        this.desc = items.getDescription();
 
         if (items.getDescription().contains("rarityMythic")){
             this.equipmentType = "myth";
@@ -148,11 +153,39 @@ public class Equipment {
         }else if (target.equals("法力")){
             this.mana = num;
             this.type = this.type+ "mana,";
+        }else if (target.equals("技能急速")){
+            this.cool = num;
+            this.type = this.type + "cool";
         }else {
             System.out.println("unknown === "+target);
         }
 
     }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public double getCool() {
+        return cool;
+    }
+
+    public void setCool(double cool) {
+        this.cool = cool;
+    }
+
+    public String getElseMap() {
+        return elseMap;
+    }
+
+    public void setElseMap(String elseMap) {
+        this.elseMap = elseMap;
+    }
+
     public String getUpdateDate() {
         return updateDate;
     }

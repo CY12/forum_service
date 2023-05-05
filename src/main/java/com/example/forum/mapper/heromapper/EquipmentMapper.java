@@ -12,4 +12,6 @@ public interface EquipmentMapper {
     List<Equipment> getAllEquipment();
 
     int addEquipment(Equipment equipment);
+
+    int updateEquipment(Equipment equipment);
 }

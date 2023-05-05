@@ -214,9 +214,9 @@ public class HttpUtils {
 
             }
             try {
-                testUtil.equipmentService.addEquipment(equipment);
+                testUtil.equipmentService.updateEquipment(equipment);
             }catch ( Exception e){
-                System.out.println("add equipment error"+e);
+                System.out.println("add equipment error "+e);
             }
             b++;
         }

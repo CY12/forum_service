@@ -9,4 +9,6 @@ public interface EquipmentService {
     List<Equipment> getAllEquipment();
 
     int addEquipment(Equipment equipment);
+
+    int updateEquipment(Equipment equipment);
 }

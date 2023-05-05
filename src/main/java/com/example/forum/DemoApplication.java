@@ -16,7 +16,7 @@ public class DemoApplication {
 		HttpUtils httpUtils = new HttpUtils();
 //		httpUtils.getHttp("https://game.gtimg.cn/images/lol/act/img/js/heroList/hero_list.js", HttpHero.class);
 //		httpUtils.initHeroData();
-//		httpUtils.initEquipment();
+		httpUtils.initEquipment();
 //		httpUtils.addKey();
 
 	}
